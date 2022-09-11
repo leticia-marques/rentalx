@@ -1,0 +1,15 @@
+version: '3.6'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./dockerfile
+    image: node
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./rentalx:/rentalx
+    ports:
+      - "8000:8080"
+
