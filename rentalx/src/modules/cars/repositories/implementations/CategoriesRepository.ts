@@ -1,5 +1,5 @@
-import { Category } from "../models/Categories";
-import { ICategoriesRespository } from "./ICategoriesRepository";
+import { Category } from "../../models/Categories";
+import { ICategoriesRespository } from "../ICategoriesRepository";
 
 interface ICreateCategoryDTO
 {
@@ -10,10 +10,18 @@ interface ICreateCategoryDTO
 class CategoriesRepository implements ICategoriesRespository
 {
 	private categories : Category[];
+	private static INSTANCE: CategoriesRepository;
 
-	constructor()
+	private constructor()
 	{
 		this.categories = [];
+	}
+
+	public static getInstance(): CategoriesRepository
+	{
+		if (!CategoriesRepository.INSTANCE)
+			return CategoriesRepository.INSTANCE = new CategoriesRepository();
+		return CategoriesRepository.INSTANCE;
 	}
 
 	create({name, description}: ICreateCategoryDTO):void
@@ -25,7 +33,6 @@ class CategoriesRepository implements ICategoriesRespository
 			created_at : new Date()
 		})
 		this.categories.push(category);
-		console.log(this.categories);
 	}
 
 	list(): Category[]

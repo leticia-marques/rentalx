@@ -1,12 +1,9 @@
-import express from "express";
+import express, { Router } from "express";
+import { router } from "./routes";
 import { categoriesRoutes } from "./routes/categories.routes";
+import { specificationsRoutes } from "./routes/specifications.routes";
 
 const app = express();
 app.use(express.json());
-app.use("/categories", categoriesRoutes);
-
-app.get("/teste", (req, res) => {
-	return res.json({message:"Teste"});
-})
-
+app.use(router);
 app.listen(8080, () => console.log("Pops"))
