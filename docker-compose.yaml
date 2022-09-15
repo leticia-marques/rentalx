@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: ./dockerfile
+    container_name: rentx
     image: node
     stdin_open: true
     tty: true
