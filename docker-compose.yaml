@@ -1,6 +1,18 @@
 version: '3.6'
 
 services:
+  database:
+    image: postgres:10.16
+    restart: always
+    environment:
+      - POSTGRES_USER=pops
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=rentx
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+
   app:
     build:
       context: .
@@ -13,4 +25,8 @@ services:
       - ./rentalx:/rentalx
     ports:
       - "8000:8080"
-
+      - "5555:5555"
+    depends_on:
+      - database
+volumes:
+  pgdata:

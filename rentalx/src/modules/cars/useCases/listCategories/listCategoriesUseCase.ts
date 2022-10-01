@@ -5,7 +5,7 @@ class ListCategoriesUseCase
 {
     constructor(private categoryRepostiroy:ICategoriesRespository){}
 
-    execute():Category[]
+    execute():Promise<Category[]>
     {
         return this.categoryRepostiroy.list();
     }

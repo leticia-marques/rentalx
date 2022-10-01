@@ -4,4 +4,4 @@ workdir /rentalx
 
 COPY /rentalx .
 
-expose 8080
+expose 8080 5555
