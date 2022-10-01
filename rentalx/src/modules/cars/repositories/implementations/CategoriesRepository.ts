@@ -13,17 +13,17 @@ class CategoriesRepository implements ICategoriesRespository
 	private categories : PrismaClient;
 	private static INSTANCE: CategoriesRepository;
 
-	private constructor()
+	constructor()
 	{
 		this.categories = new PrismaClient();
 	}
 
-	public static getInstance(): CategoriesRepository
-	{
-		if (!CategoriesRepository.INSTANCE)
-			return CategoriesRepository.INSTANCE = new CategoriesRepository();
-		return CategoriesRepository.INSTANCE;
-	}
+	// public static getInstance(): CategoriesRepository
+	// {
+	// 	if (!CategoriesRepository.INSTANCE)
+	// 		return CategoriesRepository.INSTANCE = new CategoriesRepository();
+	// 	return CategoriesRepository.INSTANCE;
+	// }
 
 	async create({name, description}: ICreateCategoryDTO):Promise<void>
 	{
