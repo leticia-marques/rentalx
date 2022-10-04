@@ -1,29 +1,40 @@
+import { PrismaClient } from "@prisma/client";
 import { Specification } from "../../models/Specification";
 import { ICreateSpecification, ICreateSpecificationDTO } from "../ISpecificationsRepository";
 
 class SpecificationsRepository implements ICreateSpecification
 {
-    private specifications: Specification[];
+    private specifications: PrismaClient;
     
     constructor()
     {
-        this.specifications = [];
+        this.specifications = new PrismaClient();
     }
 
-    create({ name, description }: ICreateSpecificationDTO) 
+    async create({ name, description }: ICreateSpecificationDTO):Promise<void>
     {
-        const specification = new Specification();
-        Object.assign(specification, {
-            name,
-            description,
-            created_at: new Date()
-        })
-        this.specifications.push(specification);
+    //     const specification = new Specification();
+    //     Object.assign(specification, {
+    //         name,
+    //         description,
+    //         created_at: new Date()
+    //     })
+    //     this.specifications.push(specification);
+            const  specification = await this.specifications.specifications.create({
+                data:{
+                    name: name,
+                    description: description
+                }
+            })
     }
 
-    findByName(name: string): Specification 
+    async findByName(name: string): Promise<Specification> 
     {
-        const specification = this.specifications.find(specification => specification.name === name);
+        const specification = await this.specifications.specifications.findFirst({
+            where:{
+                name: name
+            }
+        });
         return specification;    
     }
 
