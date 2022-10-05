@@ -8,4 +8,4 @@ import { ICreateSpecification } from "../../modules/cars/repositories/ISpecifica
 
 container.registerSingleton<ICategoriesRespository>("CategoriesRepository", CategoriesRepository);
 container.registerSingleton<ICreateSpecification>("SpecificationsRepository", SpecificationsRepository);
-container.registerSingleton<IUsersRepository>("UserRepository", UsersRepository);
+container.registerSingleton<IUsersRepository>("UsersRepository", UsersRepository);

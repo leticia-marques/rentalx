@@ -5,7 +5,6 @@ interface IRequest
 {
     name: string;
     email: string;
-    username: string;
     password: string;
     driver_licence: string;
 }

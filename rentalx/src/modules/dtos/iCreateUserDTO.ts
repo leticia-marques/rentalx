@@ -1,7 +1,7 @@
 interface ICreateUserDTO
 {   
     name: string;
-    username: string;
+    // username: string;
     email: string;
     password: string;
     driver_licence: string
