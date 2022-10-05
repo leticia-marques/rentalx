@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { ICreateUserDTO } from "../../../dtos/iCreateUserDTO";
+import { ICreateUserDTO } from "../../dtos/iCreateUserDTO";
 import { User } from "../../models/User";
 import { IUsersRepository } from "../IUsersRespository";
 
