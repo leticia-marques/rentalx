@@ -6,6 +6,7 @@ class User
     name: string;
     // username: string;
     password: string;
+    avatar: string;
     email: string;
     driver_licence: string;
     isAdmin: boolean;

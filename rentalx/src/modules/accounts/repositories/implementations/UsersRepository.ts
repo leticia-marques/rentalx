@@ -34,6 +34,16 @@ class UsersRepository implements IUsersRepository
         })
         return emailALreadyUsed;
     }
+
+    async findById(userId: string): Promise<User> 
+    {
+        const user = await this.users.users.findFirst({
+            where:{
+                id: userId
+            }
+        })    
+        return user;
+    }
     
 }
 

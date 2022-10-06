@@ -1,5 +1,6 @@
 import { hash } from "bcrypt";
 import { inject, injectable } from "tsyringe";
+import { AppError } from "../../../../errors/AppError";
 import { IUsersRepository } from "../../repositories/IUsersRespository";
 
 interface IRequest
@@ -20,7 +21,7 @@ class CreateUserUseCase
         
         if (emailALreadyUsed)
         {
-            throw new Error("Email já está no banco de dados");
+            throw new AppError("Email já está no banco de dados");
         }
         const passwordHash = await hash(data.password, 8);
         data.password = passwordHash;
