@@ -20,11 +20,24 @@ class UsersRepository implements IUsersRepository
                 name: data.name,
                 email: data.email,
                 password: data.password,
-                driver_licence: data.driver_licence
+                driver_licence: data.driver_licence,
+                avatar: data.avatar,
+                id: data.id
             }
         })
     }
     
+    async updateUser(userId: string, avatar: string): Promise<void>
+    {
+        await this.users.users.update({
+            where:{
+                id: userId
+            },
+            data:{
+                avatar: avatar
+            }
+        })    
+    }
     async findByEmail(email: string): Promise<User> 
     {
         const emailALreadyUsed = await this.users.users.findFirst({
