@@ -1,4 +1,3 @@
-import { Category } from "../../models/Categories";
 import { ListCategoriesUseCase } from "./listCategoriesUseCase";
 import {Request, Response}  from "express";
 

@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import { Specification } from "../../models/Specification";
-import { ICreateSpecification, ICreateSpecificationDTO } from "../ISpecificationsRepository";
+import { Specification } from "@modules/cars/models/Specification";
+import { ICreateSpecification, ICreateSpecificationDTO } from "@modules/cars/repositories/ISpecificationsRepository";
 
 class SpecificationsRepository implements ICreateSpecification
 {

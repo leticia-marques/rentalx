@@ -1,5 +1,5 @@
 
-import {UsersRepository} from "../../repositories/implementations/UsersRepository"
+import {UsersRepository} from "../../infra/Prisma/Repositories/UsersRepository"
 import { CreateUserController } from "./createUserController";
 import { CreateUserUseCase } from "./CreateUserUseCase";
 

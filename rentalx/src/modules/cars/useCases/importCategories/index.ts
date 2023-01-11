@@ -1,4 +1,4 @@
-import { CategoriesRepository } from "../../repositories/implementations/CategoriesRepository";
+import { CategoriesRepository } from "../../infra/Prisma/repositories/CategoriesRepository";
 import { ImportCategoryController } from "./importCategoriesController";
 import { ImportCategoryUseCase } from "./importCategoryUseCase";
 

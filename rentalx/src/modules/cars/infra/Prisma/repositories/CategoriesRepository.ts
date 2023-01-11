@@ -1,6 +1,6 @@
-import { Category } from "../../models/Categories";
-import { ICategoriesRespository } from "../ICategoriesRepository";
+import { ICategoriesRespository } from "../../../repositories/ICategoriesRepository";
 import { PrismaClient} from "@prisma/client";
+import { Category } from "@modules/cars/models/Categories";
 
 interface ICreateCategoryDTO
 {

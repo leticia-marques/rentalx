@@ -1,7 +1,7 @@
+import { ICreateUserDTO } from "@modules/accounts/dtos/iCreateUserDTO";
+import { User } from "@modules/accounts/models/User";
 import { PrismaClient } from "@prisma/client";
-import { ICreateUserDTO } from "../../dtos/iCreateUserDTO";
-import { User } from "../../models/User";
-import { IUsersRepository } from "../IUsersRespository";
+import { IUsersRepository } from "../../../repositories/IUsersRespository";
 
 
 class UsersRepository implements IUsersRepository

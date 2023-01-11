@@ -1,6 +1,8 @@
+import { CategoriesRepository } from '@modules/cars/infra/Prisma/repositories/CategoriesRepository';
 import { parse } from 'csv-parse';
 import fs from "fs";
-import { CategoriesRepository } from '../../repositories/implementations/CategoriesRepository';
+
+
 
 interface IImportCategory
 {

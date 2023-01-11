@@ -1,5 +1,6 @@
-import { Category } from "../../models/Categories";
-import { ICategoriesRespository } from "../../repositories/ICategoriesRepository";
+import { Category } from "@modules/cars/models/Categories";
+import { ICategoriesRespository } from "@modules/cars/repositories/ICategoriesRepository";
+
 
 class ListCategoriesUseCase
 {
