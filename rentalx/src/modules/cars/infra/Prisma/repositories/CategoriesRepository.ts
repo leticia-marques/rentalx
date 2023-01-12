@@ -11,7 +11,7 @@ interface ICreateCategoryDTO
 class CategoriesRepository implements ICategoriesRespository
 {
 	private categories : PrismaClient;
-	private static INSTANCE: CategoriesRepository;
+	// private static INSTANCE: CategoriesRepository;
 
 	constructor()
 	{
@@ -26,7 +26,6 @@ class CategoriesRepository implements ICategoriesRespository
 				description: description
 			}
 		})
-		console.log(category);
 	}
 
 	async list(): Promise<Category[]>
@@ -34,7 +33,7 @@ class CategoriesRepository implements ICategoriesRespository
 		const categories = await this.categories.categories.findMany();
 		return categories;
 	}
-
+	
 	async findByName(name:string):Promise<Category>
 	{
 		const categoryFound = await this.categories.categories.findFirst({

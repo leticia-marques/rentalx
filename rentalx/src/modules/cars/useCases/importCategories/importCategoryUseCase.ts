@@ -1,6 +1,7 @@
 import { CategoriesRepository } from '@modules/cars/infra/Prisma/repositories/CategoriesRepository';
 import { parse } from 'csv-parse';
 import fs from "fs";
+import { inject, injectable } from 'tsyringe';
 
 
 
@@ -9,10 +10,10 @@ interface IImportCategory
     name:string;
     description:string;
 }
-
+@injectable()
 class ImportCategoryUseCase
 {
-    constructor(private categoryrepository: CategoriesRepository) {}
+    constructor(@inject("CategoriesRepository") private categoryrepository: CategoriesRepository) {}
 
     loadFile(file:Express.Multer.File):Promise<IImportCategory[]>
     {
@@ -41,10 +42,10 @@ class ImportCategoryUseCase
         const categories = await this.loadFile(file);
         categories.map(async category => {
             const {name, description} = category;
-            const categoryExist = this.categoryrepository.findByName(name);
+            const categoryExist = await this.categoryrepository.findByName(name);
             if (!categoryExist)
             {
-                this.categoryrepository.create({name, description});
+                await this.categoryrepository.create({name, description});
             }
         });
     }
