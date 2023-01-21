@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "dev": "ts-node-dev -r tsconfig-paths/register --unhandled-rejections=throw --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
-    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js -d src/database/data-source.ts"
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js -d src/database/data-source.ts",
+    "seed:admin":"ts-node-dev src/shared/infra/Prisma/Seed/admin.ts"
   },
   "keywords": [],
   "author": "",

@@ -4,8 +4,6 @@ import { container } from "tsyringe";
 
 class ImportCategoryController
 {
-    
-
     handle(request:Request, response:Response):Response
     {
         const importCategoriesUseCase = container.resolve(ImportCategoryUseCase);

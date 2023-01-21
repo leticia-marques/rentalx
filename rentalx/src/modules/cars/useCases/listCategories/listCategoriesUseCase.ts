@@ -1,4 +1,4 @@
-import { Category } from "@modules/cars/models/Categories";
+import { Category } from "@modules/cars/models/Categorie";
 import { ICategoriesRespository } from "@modules/cars/repositories/ICategoriesRepository";
 import { inject, injectable } from "tsyringe";
 

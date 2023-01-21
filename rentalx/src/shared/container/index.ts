@@ -7,7 +7,10 @@ import { ICreateSpecification } from "@modules/cars/repositories/ISpecifications
 import { UsersRepository } from "@modules/accounts/infra/Prisma/Repositories/UsersRepository";
 import { CategoriesRepository } from "@modules/cars/infra/Prisma/repositories/CategoriesRepository";
 import { SpecificationsRepository } from "@modules/cars/infra/Prisma/repositories/SpecificationRepository";
+import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
+import { CarsRepository } from "@modules/cars/infra/Prisma/repositories/CarsRepository";
 
 container.registerSingleton<ICategoriesRespository>("CategoriesRepository", CategoriesRepository);
 container.registerSingleton<ICreateSpecification>("SpecificationsRepository", SpecificationsRepository);
 container.registerSingleton<IUsersRepository>("UsersRepository", UsersRepository);
+container.registerSingleton<ICarsRepository>("CarsRepository", CarsRepository);

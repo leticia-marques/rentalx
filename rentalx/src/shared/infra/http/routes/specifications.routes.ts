@@ -4,15 +4,12 @@ import { ensureAuthentication } from "@shared/infra/http/middlewares/ensureAuthe
 const specificationsRoutes = Router();
 
 import {CreateSpecificationController} from '@modules/cars/useCases/createSpecification/createSpecificationController';
+import { ensureAdmin } from "../middlewares/ensureAdmin";
 
 const createSpecificationController= new CreateSpecificationController()
 
-specificationsRoutes.use(ensureAuthentication);
-specificationsRoutes.post("/", createSpecificationController.handle);
+// specificationsRoutes.use(ensureAuthentication);
 
-// categoriesRoutes.get("/", (req, res) => {
-//     const all = SpecificationsRepository.list();
-//     res.json(all);
-// })
+specificationsRoutes.post("/", ensureAuthentication, ensureAdmin, createSpecificationController.handle);
 
 export {specificationsRoutes};

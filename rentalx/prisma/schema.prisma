@@ -25,7 +25,7 @@ model Specifications {
   name        String
   description String
   created_at  DateTime @default(now())
-
+  // specificationCar SpecificationsCar[]
   @@map("specifications")
 }
 
@@ -38,7 +38,7 @@ model Users {
   driver_licence String
   isAdmin        Boolean @default(false)
   avatar         String?
-
+  created_at     DateTime @default(now())
   @@map("users")
 }
 
@@ -54,6 +54,15 @@ model Cars {
   category_id   String?
   category      Categories? @relation(fields: [category_id], references: [id], onDelete: SetNull, onUpdate: SetNull)
   created_at    DateTime   @default(now())
-
+  // specificationCar SpecificationsCar[]
   @@map("cars")
 }
+
+// model SpecificationsCar {
+//   id               String          @id @default(uuid())
+//   car_id           String?
+//   car              Cars?           @relation(fields: [car_id], references: [id], onDelete: SetNull, onUpdate: SetNull)
+//   specification_id String?
+//   specification    Specifications? @relation(fields: [specification_id], references: [id], onDelete: SetNull, onUpdate: SetNull)
+//   created_at       DateTime        @default(now())
+// }
