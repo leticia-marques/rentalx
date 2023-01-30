@@ -1,12 +1,12 @@
-import { ICreateUserDTO } from "@modules/accounts/dtos/iCreateUserDTO";
 import { User } from "@modules/accounts/models/User";
 import { IUsersRepository } from "../IUsersRespository";
 import {v4 as uuidv4} from "uuid";
+import { IUserDTO } from "@modules/accounts/dtos/iUserDTO";
 
 class UsersRepositoryInMemory implements IUsersRepository
 {
     users: User[] = [];
-    async create({name, email, driver_licence, password}: ICreateUserDTO): Promise<void> 
+    async create({name, email, driver_licence, password}: IUserDTO): Promise<void> 
     {
         const user = new User();
 
@@ -31,8 +31,10 @@ class UsersRepositoryInMemory implements IUsersRepository
         return this.users.find(user => user.id === userId);
     }
 
-    updateUser(userId: string, avatar: string): Promise<void> {
-        throw new Error("Method not implemented.");
+    async updateUser(userId: string, avatar: string): Promise<void> 
+    {
+       let user = await this.findById(userId);
+       user.avatar = avatar;
     }
 }
 

@@ -1,4 +1,6 @@
 import {v4 as uuidv4} from "uuid";
+import { Specification } from "./Specification";
+
 class Car
 {
     id: string
@@ -11,7 +13,8 @@ class Car
     category_id: string;
     created_at: Date;
     available: boolean;
-
+    specifications?: Specification[];
+    
     constructor()
     {
         if (!this.id)
@@ -23,4 +26,4 @@ class Car
     }
 }
 
-export{Car};
+export {Car};

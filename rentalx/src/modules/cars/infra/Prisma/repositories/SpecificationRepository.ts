@@ -1,8 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import { Specification } from "@modules/cars/models/Specification";
-import { ICreateSpecification, ICreateSpecificationDTO } from "@modules/cars/repositories/ISpecificationsRepository";
+import {ISpecificationsRepository} from "@modules/cars/repositories/ISpecificationsRepository";
+import { ISpecificationDTO } from "@modules/cars/DTOs/ISpecificationDTO";
 
-class SpecificationsRepository implements ICreateSpecification
+class SpecificationsRepository implements ISpecificationsRepository
 {
     private specifications: PrismaClient;
     
@@ -10,22 +11,17 @@ class SpecificationsRepository implements ICreateSpecification
     {
         this.specifications = new PrismaClient();
     }
+   
 
-    async create({ name, description }: ICreateSpecificationDTO):Promise<void>
+    async create({ name, description }: ISpecificationDTO):Promise<Specification>
     {
-    //     const specification = new Specification();
-    //     Object.assign(specification, {
-    //         name,
-    //         description,
-    //         created_at: new Date()
-    //     })
-    //     this.specifications.push(specification);
-            const  specification = await this.specifications.specifications.create({
-                data:{
-                    name: name,
+       const  specification = await this.specifications.specifications.create({
+            data:{
+                   name: name,
                     description: description
                 }
             })
+        return specification
     }
 
     async findByName(name: string): Promise<Specification> 
@@ -36,6 +32,12 @@ class SpecificationsRepository implements ICreateSpecification
             }
         });
         return specification;    
+    }
+
+    async findByIds(ids: string[]): Promise<Specification[]> 
+    {
+        const specifications = await this.specifications.specifications.findMany({where:{id:{in:ids}}})
+        return specifications;
     }
 
 }

@@ -3,6 +3,7 @@ import { IUsersRepository } from "../../repositories/IUsersRespository";
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { AppError } from "../../../../shared/errors/AppError";
+
 interface IRequest
 {
     email: string;
@@ -32,7 +33,11 @@ class AuthenticateUserUseCase
         const passwordCorrect = await compare(password, user.password);
         if (!passwordCorrect)
             throw new AppError("Usuario ou senha incorretos");
-        const token = sign({}, "d7ed0c21147eda6d1e11cc7db5037c7b", {subject:user.id, expiresIn:"1d"});
+        const token = sign({}, 
+                "d7ed0c21147eda6d1e11cc7db5037c7b", 
+                {subject:user.id, expiresIn:"1d"}
+                );
+                
         const authenticateToken : IResponse = {
             token, 
             user: {

@@ -4,12 +4,20 @@ class User
 {
     id: string;
     name: string;
-    // username: string;
     password: string;
     avatar: string;
     email: string;
     driver_licence: string;
     isAdmin: boolean;
+
+    constructor()
+    {
+        if (!this.id)
+        {
+            this.id = uuidv4();
+            this.isAdmin = false
+        }
+    }
 }
 
 export {User}

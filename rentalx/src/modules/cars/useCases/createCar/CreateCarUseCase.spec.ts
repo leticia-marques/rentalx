@@ -1,7 +1,7 @@
 import { ICreateCarsDTO } from "@modules/cars/DTOs/ICarsDTO";
 import { CarsRepositoryInMemory } from "@modules/cars/repositories/in-memory/CarsRepositoryInMemory";
 import { AppError } from "@shared/errors/AppError";
-import { CreateCarUseCase } from "./createCarsUseCase"
+import { CreateCarUseCase } from "./createCarUseCase"
 
 let createCarUseCase: CreateCarUseCase;
 let carsRepositoryInMemory: CarsRepositoryInMemory;

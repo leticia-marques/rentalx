@@ -30,4 +30,5 @@ app.use((err: Error, request: Request,response:Response, next: NextFunction) => 
         });
     }
 })
-app.listen(8080, () => console.log("Pops"))
+
+export {app};

@@ -10,6 +10,7 @@ interface IRequest
     password: string;
     driver_licence: string;
 }
+
 @injectable()
 class CreateUserUseCase
 {

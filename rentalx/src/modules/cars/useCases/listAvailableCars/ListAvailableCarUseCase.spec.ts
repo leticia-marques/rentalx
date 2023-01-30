@@ -1,7 +1,5 @@
-import { ICreateCarsDTO } from "@modules/cars/DTOs/ICarsDTO";
+import { ICarDTO } from "@modules/cars/DTOs/ICarDTO";
 import { CarsRepositoryInMemory } from "@modules/cars/repositories/in-memory/CarsRepositoryInMemory"
-import { getCombinedModifierFlags } from "typescript";
-import { CreateCarUseCase } from "../createCar/createCarsUseCase";
 import { ListCarsUseCase } from "./ListAvailableCarUseCase";
 
 let carsRepositoryInMemory:CarsRepositoryInMemory;
@@ -22,7 +20,7 @@ describe("List cars", () => {
             brand: "Test brand",
             category_id: "1"
         });
-        const car2: ICreateCarsDTO = {
+        const car2: ICarDTO = {
             name: "Test name2",
             description: "Test Description2",
             daily_rate: 60,

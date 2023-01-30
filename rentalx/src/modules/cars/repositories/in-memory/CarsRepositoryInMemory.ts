@@ -1,12 +1,15 @@
-import { ICreateCarsDTO } from "@modules/cars/DTOs/ICarsDTO";
+import { ICarDTO } from "@modules/cars/DTOs/ICarDTO";
 import { Car } from "@modules/cars/models/Car";
+import { Specification } from "@modules/cars/models/Specification";
 import { ICarsRepository } from "../ICarsRepository";
 
 
 class CarsRepositoryInMemory implements ICarsRepository
 {
+    
     cars: Car[] = [];
-    async create(data: ICreateCarsDTO): Promise<Car>
+    
+    async create(data: ICarDTO): Promise<Car>
     {
         const car = new Car();
         Object.assign(car, { 
@@ -16,17 +19,33 @@ class CarsRepositoryInMemory implements ICarsRepository
             license_plate: data.license_plate,
             fine_amount: data.fine_amount,
             brand: data.brand,
-            category_id: data.category_id
+            category_id: data.category_id,
+            specifications: data.specifications,
+            id: data.id
         })
+        
         this.cars.push(car);
         return car;
     }
 
+    async update(car_id: string, specifications: Specification[]): Promise<Car> 
+    {
+        let car = await this.findById(car_id);
+        car.specifications = specifications;
+
+        return car;
+    }
+
+    async findById(car_id: string): Promise<Car> 
+    {
+        return this.cars.find(car => car.id === car_id);
+    }
+    
     async findCarByLicensePlate(license_plate: string): Promise<Car> 
     {
         return this.cars.find(car => car.license_plate === license_plate);    
     }
-
+    
     async findAvaliable(name?:string, brand?:string, category_id?:string): Promise<Car[]> 
     {
         const cars = this.cars.filter(car => {
@@ -39,6 +58,7 @@ class CarsRepositoryInMemory implements ICarsRepository
         });    
         return cars;
     }
+
 }
 
-export{CarsRepositoryInMemory}
+export {CarsRepositoryInMemory}
