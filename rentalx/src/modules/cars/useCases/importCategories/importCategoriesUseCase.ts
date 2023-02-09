@@ -1,4 +1,4 @@
-import { ICategoriesRespository } from '@modules/cars/repositories/ICategoriesRepository';
+import { ICategoriesRepository } from '@modules/cars/repositories/ICategoriesRepository';
 import { parse } from 'csv-parse';
 import fs from "fs";
 import { inject, injectable } from 'tsyringe';
@@ -12,7 +12,7 @@ interface IImportCategory
 @injectable()
 class ImportCategoriesUseCase
 {
-    constructor(@inject("CategoriesRepository") private categoryrepository: ICategoriesRespository) {}
+    constructor(@inject("CategoriesRepository") private categoryRepository: ICategoriesRepository) {}
 
     loadFile(file:Express.Multer.File):Promise<IImportCategory[]>
     {
@@ -41,10 +41,10 @@ class ImportCategoriesUseCase
         const categories = await this.loadFile(file);
         categories.map(async category => {
             const {name, description} = category;
-            const categoryExist = await this.categoryrepository.findByName(name);
+            const categoryExist = await this.categoryRepository.findByName(name);
             if (!categoryExist)
             {
-                await this.categoryrepository.create({name, description});
+                await this.categoryRepository.create({name, description});
             }
         });
     }

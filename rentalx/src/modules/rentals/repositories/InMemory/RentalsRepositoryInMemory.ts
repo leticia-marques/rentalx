@@ -5,6 +5,7 @@ import { IRentalsRepository } from "../IRentalRepository";
 
 class RentalsRepositoryInMemory implements IRentalsRepository
 {
+    
     rentals: Rental[] = [];
     async create(data: IRentalDTO): Promise<Rental> 
     {
@@ -17,6 +18,25 @@ class RentalsRepositoryInMemory implements IRentalsRepository
         })
         this.rentals.push(rental);
         return rental;
+    }
+
+    async findById(rental_id: string): Promise<Rental> 
+    {
+        return this.rentals.find(rental => rental.id === rental_id);
+    }
+
+    async update(rental_id: string, end_date: Date, total: number): Promise<Rental> 
+    {
+        const rental = await this.findById(rental_id);
+        rental.end_date = end_date;
+        rental.total = total;
+
+        return rental
+    }
+
+    async findManyByUserId(user_id: string): Promise<Rental[]> 
+    {
+        return this.rentals.filter(rental => rental.user_id === user_id);
     }
 
     async findOpenRentalByCar(car_id: string): Promise<Rental> 

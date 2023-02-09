@@ -1,12 +1,13 @@
-import { Category } from "@modules/cars/models/Categorie";
-import { ICategoriesRespository, ICreateCategoryDTO } from "../ICategoriesRepository";
+import { ICategoryDTO } from "@modules/cars/DTOs/ICategoryDTO";
+import { Category } from "@modules/cars/models/Category";
+import { ICategoriesRepository} from "../ICategoriesRepository";
 
 
-class CategoriesRepositoryInMemory implements ICategoriesRespository
+class CategoriesRepositoryInMemory implements ICategoriesRepository
 {
     categories: Category[] = [];
 
-    async create({ name, description }: ICreateCategoryDTO): Promise<void> 
+    async create({ name, description }: ICategoryDTO): Promise<void> 
     {
         const category = new Category();
         Object.assign(category, {name, description});

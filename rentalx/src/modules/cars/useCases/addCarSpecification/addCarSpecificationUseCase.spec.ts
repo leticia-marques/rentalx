@@ -1,5 +1,6 @@
 import { CarsRepositoryInMemory } from "@modules/cars/repositories/in-memory/CarsRepositoryInMemory";
-import { SpecificationRepositoryInMemory } from "@modules/cars/repositories/in-memory/SpecificationsRepositoryInMemory";
+import { SpecificationsRepositoryInMemory } from "@modules/cars/repositories/in-memory/SpecificationsRepositoryInMemory";
+
 import { AppError } from "@shared/errors/AppError";
 import { AddCarSpecificationUseCase } from "./addCarSpecificationUseCase";
 
@@ -7,13 +8,13 @@ import { AddCarSpecificationUseCase } from "./addCarSpecificationUseCase";
 
 let carsRepositoryInMemory:CarsRepositoryInMemory;
 let addCarSpecificationUseCase: AddCarSpecificationUseCase;
-let specificationRepositoryInMemory: SpecificationRepositoryInMemory;
+let specificationRepositoryInMemory: SpecificationsRepositoryInMemory;
 
 describe("Add car specification", () => {
 
     beforeEach(() => {
         carsRepositoryInMemory = new CarsRepositoryInMemory();
-        specificationRepositoryInMemory = new SpecificationRepositoryInMemory()
+        specificationRepositoryInMemory = new SpecificationsRepositoryInMemory()
         addCarSpecificationUseCase = new AddCarSpecificationUseCase(carsRepositoryInMemory, specificationRepositoryInMemory);
     })
 
@@ -35,7 +36,7 @@ describe("Add car specification", () => {
             }).rejects.toBeInstanceOf(AppError);
     })
 
-    it ("should be able to add a specifiation to a car", async () => {
+    it ("should be able to add a specification to a car", async () => {
         const specification = await specificationRepositoryInMemory.create({name:"testeName", description:"TestDescription"});
         const specifications = [specification.id];
         const car = await carsRepositoryInMemory.create({

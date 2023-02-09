@@ -7,7 +7,7 @@ class User
     password: string;
     avatar: string;
     email: string;
-    driver_licence: string;
+    driver_license: string;
     isAdmin: boolean;
 
     constructor()

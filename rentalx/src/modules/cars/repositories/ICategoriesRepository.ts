@@ -1,12 +1,12 @@
-import { ICategoryDTO } from "../DTOs/ICatergoryDTO";
-import { Category } from "../models/Categorie";
+import { ICategoryDTO } from "../DTOs/ICategoryDTO";
+import { Category } from "../models/Category";
 
 
-interface ICategoriesRespository
+interface ICategoriesRepository
 {
 	create({name, description}:ICategoryDTO):Promise<void>;
 	list():Promise<Category[]>;
 	findByName(name:string):Promise<Category>;
 }
 
-export {ICategoriesRespository};
+export {ICategoriesRepository};

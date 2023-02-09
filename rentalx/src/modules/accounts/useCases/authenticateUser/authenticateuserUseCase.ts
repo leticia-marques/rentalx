@@ -1,8 +1,11 @@
 import { inject, injectable } from "tsyringe";
-import { IUsersRepository } from "../../repositories/IUsersRespository";
+import { IUsersRepository } from "../../repositories/IUsersRepository";
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { AppError } from "../../../../shared/errors/AppError";
+import auth from "@config/auth";
+import { IUserTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
+import { IDateProvider } from "@shared/container/providers/dateProvider/IDateProvider";
 
 interface IRequest
 {
@@ -17,13 +20,16 @@ interface IResponse
         email: string;
     },
     token: string;
-
+    refresh_token:string;
 }
 
 @injectable()
 class AuthenticateUserUseCase
 {
-    constructor(@inject("UsersRepository") private userRepository: IUsersRepository){}
+    constructor(
+                @inject("UsersRepository") private userRepository: IUsersRepository, 
+                @inject("UsersTokensRepository") private usersTokensRepository:IUserTokensRepository,
+                @inject("DayjsDateProvider") private dateProvider:IDateProvider){}
 
     async execute({email, password}:IRequest):Promise<IResponse>
     {
@@ -33,20 +39,20 @@ class AuthenticateUserUseCase
         const passwordCorrect = await compare(password, user.password);
         if (!passwordCorrect)
             throw new AppError("Usuario ou senha incorretos");
-        const token = sign({}, 
-                "d7ed0c21147eda6d1e11cc7db5037c7b", 
-                {subject:user.id, expiresIn:"1d"}
-                );
-                
+        const token = sign({}, auth.secret_token, {subject:user.id, expiresIn:auth.expires_in_token});
+        const refreshToken = sign({email}, auth.refresh_secret_token, {subject:user.id, expiresIn:auth.expires_in_refresh_token});
+        const refreshTokenExpireDate = this.dateProvider.addDays(30);
+        await this.usersTokensRepository.create({user_id:user.id, refresh_token:refreshToken, expires_date:refreshTokenExpireDate})
         const authenticateToken : IResponse = {
             token, 
             user: {
                 name: user.name,
                 email: user.email
-            }
+            },
+            refresh_token:refreshToken
         }
         return authenticateToken;
     }
 }
 
-export {AuthenticateUserUseCase}
+export {AuthenticateUserUseCase};

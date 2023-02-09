@@ -12,16 +12,38 @@ class RentalsRepository implements IRentalsRepository
     {
         this.rentals = new PrismaClient();
     }
+    
+    async findById(rental_id: string): Promise<Rental> 
+    {
+        return this.rentals.rentals.findFirst({where:{id:rental_id}});
+    }
+
+    async findManyByUserId(user_id: string): Promise<Rental[]> 
+    {
+        return this.rentals.rentals.findMany({where:{user_id:user_id}, include:{cars:true}});
+    }
+
+    async update(rental_id: string, end_date:Date, total:number): Promise<Rental> 
+    {
+        const rental = await this.rentals.rentals.update({
+            where:{id:rental_id},
+            data:{
+                end_date:end_date,
+                total:total
+            }
+        })
+        return rental;
+    }
 
     async findOpenRentalByCar(car_id: string): Promise<Rental> 
     {
-       const rental = await this.rentals.rentals.findFirst({where:{car_id:car_id}});
+       const rental = await this.rentals.rentals.findFirst({where:{car_id:car_id, cars:{available:false}}});
        return rental;
     }
 
     async findOpenRentalToUser(user_id: string): Promise<Rental> 
     {
-        const rental = await this.rentals.rentals.findFirst({where:{user_id:user_id}})
+        const rental = await this.rentals.rentals.findFirst({where:{user_id:user_id, end_date:null}})
         return rental;
     }
 

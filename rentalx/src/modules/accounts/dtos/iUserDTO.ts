@@ -6,7 +6,7 @@ interface IUserDTO
     password: string;
     avatar?: string;
     id?: string;
-    driver_licence: string
+    driver_license: string
 }
 
 export {IUserDTO}

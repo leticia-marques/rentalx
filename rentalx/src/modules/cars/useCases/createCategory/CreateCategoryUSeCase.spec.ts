@@ -1,14 +1,14 @@
+import { CategoriesRepositoryInMemory } from "@modules/cars/repositories/in-memory/CategoriesRepositoryInMemory";
 import { AppError } from "@shared/errors/AppError";
-import { CreateCategoryRepositoryInMemory } from "@modules/cars/repositories/in-memory/CategoriesRepositoryInMemory";
-import { CreateCategoriesUseCase } from "./CreateCategoryUseCase";
+import { CreateCategoryUseCase } from "./CreateCategoryUseCase";
 
-let categoriesRepostiroyinMemory: CreateCategoryRepositoryInMemory;
-let createCategoryUseCase: CreateCategoriesUseCase;
+let categoriesRepositoryInMemory: CategoriesRepositoryInMemory;
+let createCategoryUseCase: CreateCategoryUseCase;
 
 describe("Create Category", () => {
     beforeEach(()=> {
-        categoriesRepostiroyinMemory = new CreateCategoryRepositoryInMemory();
-        createCategoryUseCase = new CreateCategoriesUseCase(categoriesRepostiroyinMemory);
+        categoriesRepositoryInMemory = new CategoriesRepositoryInMemory();
+        createCategoryUseCase = new CreateCategoryUseCase(categoriesRepositoryInMemory);
     });
 
     it('Should be able to create a new category', async () =>{
@@ -18,7 +18,7 @@ describe("Create Category", () => {
         }
 
         await  createCategoryUseCase.execute({name:category.name, description:category.description});
-        const categoryCreated = await categoriesRepostiroyinMemory.findByName(category.name);
+        const categoryCreated = await categoriesRepositoryInMemory.findByName(category.name);
         expect(categoryCreated).toHaveProperty("id");
     })
 

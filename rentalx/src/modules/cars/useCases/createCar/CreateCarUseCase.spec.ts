@@ -1,4 +1,5 @@
-import { ICreateCarsDTO } from "@modules/cars/DTOs/ICarsDTO";
+
+import { ICarDTO } from "@modules/cars/DTOs/ICarDTO";
 import { CarsRepositoryInMemory } from "@modules/cars/repositories/in-memory/CarsRepositoryInMemory";
 import { AppError } from "@shared/errors/AppError";
 import { CreateCarUseCase } from "./createCarUseCase"
@@ -13,7 +14,7 @@ describe("Create car", () => {
     })
 
     it ("should be able to create a new car", async () => {
-        const car: ICreateCarsDTO = {
+        const car: ICarDTO = {
             name: "Test name",
             description: "Test Description",
             daily_rate: 60,
@@ -27,7 +28,7 @@ describe("Create car", () => {
     })
 
     it ("Should not be able to create a new car with license plate that's already registered", () => {
-        const car: ICreateCarsDTO = {
+        const car: ICarDTO = {
             name: "Test name",
             description: "Test Description",
             daily_rate: 60,
@@ -36,7 +37,7 @@ describe("Create car", () => {
             brand: "Test brand",
             category_id: "1"
         }
-        const car2: ICreateCarsDTO = {
+        const car2: ICarDTO = {
             name: "Test name2",
             description: "Test Description2",
             daily_rate: 60,
@@ -50,7 +51,7 @@ describe("Create car", () => {
     })
 
     it ("it should create a car with availability true as default", async() => {
-        const car: ICreateCarsDTO = {
+        const car: ICarDTO = {
             name: "Test name",
             description: "Test Description",
             daily_rate: 60,

@@ -1,3 +1,4 @@
+import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { Rental } from "@modules/rentals/models/Rental";
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalRepository";
 import { IDateProvider } from "@shared/container/providers/dateProvider/IDateProvider";
@@ -13,11 +14,12 @@ interface IRequest
 @injectable()
 class CreateRentalUseCase
 {
-    constructor(@inject("RentalsRepository") private rentalRepository:IRentalsRepository, @inject("DayjsDateProvider") private dayjsProvider:IDateProvider){}
+    constructor(@inject("RentalsRepository") private rentalRepository:IRentalsRepository,
+         @inject("DayjsDateProvider") private dayjsProvider:IDateProvider,
+         @inject("CarsRepository") private carsRepository:ICarsRepository){}
 
     async execute({car_id, user_id, expected_return_date}:IRequest):Promise<Rental>
     {
-        console.log(this.dayjsProvider.fixDate(expected_return_date));
         const minimumRentHours = 24;
         const carUnavailable = await this.rentalRepository.findOpenRentalByCar(car_id);
 
@@ -38,6 +40,7 @@ class CreateRentalUseCase
             user_id: user_id,
             expected_return_date: this.dayjsProvider.fixDate(expected_return_date)
         });
+        await this.carsRepository.updateAvailable(car_id, false)
         return rental;
         
     }

@@ -12,7 +12,7 @@ class CarsRepository implements ICarsRepository
     {
        this.cars = new PrismaClient();
     }
-    
+       
     async update(car_id: string, specifications: Specification[]): Promise<Car> 
     {
         const specs = specifications.map(item => item.id)
@@ -28,6 +28,16 @@ class CarsRepository implements ICarsRepository
 
     }
 
+    async updateAvailable(car_id: string, available: boolean): Promise<Car> 
+    {
+       const car = this.cars.cars.update({
+        where:{id:car_id},
+        data:{
+            available:available
+        }
+       })
+       return car;
+    }
     async create(data: ICarDTO): Promise<Car> 
     {
         const car = await this.cars.cars.create({
@@ -46,7 +56,7 @@ class CarsRepository implements ICarsRepository
         return car;
     }
     
-    async findAvaliable(name?:string, brand?:string, category_id?:string): Promise<Car[]> 
+    async findAvailable(name?:string, brand?:string, category_id?:string): Promise<Car[]> 
     {
         let carsAvailable = await this.cars.cars.findMany({
             where:{

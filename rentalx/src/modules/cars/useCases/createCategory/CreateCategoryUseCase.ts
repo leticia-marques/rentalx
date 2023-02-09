@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { AppError } from "@shared/errors/AppError";
-import { ICategoriesRespository } from "@modules/cars/repositories/ICategoriesRepository";
+import { ICategoriesRepository } from "@modules/cars/repositories/ICategoriesRepository";
 
 
 interface IRequest
@@ -11,7 +11,7 @@ interface IRequest
 @injectable()
 class CreateCategoryUseCase
 {
-	constructor(@inject("CategoriesRepository") private categoryRepository:ICategoriesRespository){}
+	constructor(@inject("CategoriesRepository") private categoryRepository:ICategoriesRepository){}
 
 	async execute({name, description}:IRequest):Promise<void>
 	{
