@@ -24,6 +24,7 @@ class UpdateUserAvatarUseCase
             await this.uploadProvider.delete(user.avatar, "avatar");
         }
         await this.uploadProvider.save(avatarFile, "avatar");
+        console.log(avatarFile)
         await this.userRepository.updateUserAvatar(userId, avatarFile);
     }
 }

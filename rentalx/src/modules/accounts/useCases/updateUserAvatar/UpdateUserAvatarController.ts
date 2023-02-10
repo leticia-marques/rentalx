@@ -9,6 +9,7 @@ class UpdateUserAvatarController
     {
         const {id} = request.user;
         const avatarFile = request.file.filename;
+       
         const updateUserAvatarUseCase = container.resolve(UpdateUserAvatarUseCase);
         await updateUserAvatarUseCase.execute({userId: id, avatarFile});
         return response.status(204).send();
