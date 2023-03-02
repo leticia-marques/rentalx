@@ -1,5 +1,5 @@
 import {v4 as uuidv4} from "uuid";
-
+import {Expose} from "class-transformer";
 class User
 {
     id: string;
@@ -9,7 +9,7 @@ class User
     email: string;
     driver_license: string;
     isAdmin: boolean;
-
+   
     constructor()
     {
         if (!this.id)

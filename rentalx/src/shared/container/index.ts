@@ -13,15 +13,28 @@ import { ICarsImagesRepository } from "@modules/cars/repositories/ICarsImagesRep
 import { CarsImagesRepository } from "@modules/cars/infra/Prisma/repositories/CarsImagesRepository";
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalRepository";
 import { RentalsRepository } from "@modules/rentals/infra/Prisma/repositories/RentalsRepository";
-import { IDateProvider } from "./providers/dateProvider/IDateProvider";
-import { DayjsDateProvider } from "./providers/dateProvider/implementations/DayjsDateProvider";
 import { IUserTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
 import { UsersTokensRepository } from "@modules/accounts/infra/Prisma/Repositories/UsersTokensRepository";
+import { IDateProvider } from "./providers/dateProvider/IDateProvider";
+import { DayjsDateProvider } from "./providers/dateProvider/implementations/DayjsDateProvider";
 import { IEmailProvider } from "./providers/emailProvider/IEmailProvider";
-import { EtherealMailProvider } from "./providers/emailProvider/implementations/EtherealMailProvider";
 import { IUploadProvider } from "./providers/uploadProvider/IUploadProvider";
-import { UploadProvider } from "./providers/uploadProvider/implementations/UploadProvider";
+import { EtherealMailProvider } from "./providers/emailProvider/implementations/EtherealMailProvider";
+import { S3MailProvider } from "./providers/emailProvider/implementations/S3MailProvider";
 import { S3UploadProvider } from "./providers/uploadProvider/implementations/S3UploadProvider";
+import { UploadProvider } from "./providers/uploadProvider/implementations/UploadProvider";
+
+
+const diskConfig = {
+    local: UploadProvider,
+    s3: S3UploadProvider
+}
+
+const mailConfig = {
+    ethereal: container.resolve(EtherealMailProvider),
+    nodeMailer: container.resolve(S3MailProvider)
+}
+
 
 container.registerSingleton<ICategoriesRepository>("CategoriesRepository", CategoriesRepository);
 container.registerSingleton<ISpecificationsRepository>("SpecificationsRepository", SpecificationsRepository);
@@ -29,8 +42,9 @@ container.registerSingleton<IUsersRepository>("UsersRepository", UsersRepository
 container.registerSingleton<ICarsRepository>("CarsRepository", CarsRepository);
 container.registerSingleton<ICarsImagesRepository>("CarsImagesRepository", CarsImagesRepository);
 container.registerSingleton<IRentalsRepository>("RentalsRepository", RentalsRepository);
+
+container.registerSingleton<IUserTokensRepository>("UsersTokensRepository", UsersTokensRepository);
+container.registerSingleton<IUserTokensRepository>("UsersTokensRepository", UsersTokensRepository);
+container.registerInstance<IEmailProvider>("MailProvider", mailConfig[process.env.MAIL_PROVIDER]);
+container.registerSingleton<IUploadProvider>("UploadProvider", diskConfig[process.env.disk]);
 container.registerSingleton<IDateProvider>("DayjsDateProvider", DayjsDateProvider);
-container.registerSingleton<IUserTokensRepository>("UsersTokensRepository", UsersTokensRepository);
-container.registerSingleton<IUserTokensRepository>("UsersTokensRepository", UsersTokensRepository);
-container.registerInstance<IEmailProvider>("EtherealMailProvider", new EtherealMailProvider());
-container.registerSingleton<IUploadProvider>("UploadProvider", S3UploadProvider);

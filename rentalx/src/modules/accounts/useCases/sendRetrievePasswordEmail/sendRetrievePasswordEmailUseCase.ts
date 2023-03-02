@@ -13,7 +13,7 @@ class SendRetrievePasswordEmailUseCase
         @inject("UsersRepository") private usersRepository:IUsersRepository,
         @inject("DayjsDateProvider") private dateProvider:IDateProvider,
         @inject("UsersTokensRepository") private usersTokensRepository:IUserTokensRepository,
-        @inject("EtherealMailProvider") private etherealMailProvider:IEmailProvider
+        @inject("MailProvider") private MailProvider:IEmailProvider
         ){}
 
     async execute(email:string)
@@ -38,7 +38,7 @@ class SendRetrievePasswordEmailUseCase
         const expires_date = this.dateProvider.addHours(3);
 
         const response = await this.usersTokensRepository.create({expires_date, user_id:user.id, refresh_token:token});
-        const message = await this.etherealMailProvider.sendEmail(email,
+        const message = await this.MailProvider.sendEmail(email,
             "Recuperação de senha", 
             variables,
             templatePath
